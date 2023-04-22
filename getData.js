@@ -1,6 +1,5 @@
-const axios = require('axios')
-
 const getData = async (ctx, host) => {
+    const axios = require('axios')
     ctx.reply('Loading...\nTunggu 5 detik, bila lebih ganti command lainnya.')
     const query = ctx.message.text
     let splitQuery = query.split(' ')
