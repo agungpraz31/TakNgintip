@@ -1,8 +1,8 @@
 let menus = 
 `
 <b>PERINTAH BOT</b>
-/ngintip1 <username>
-/ngintip2 <username>
+/ngintip1 [username]
+/ngintip2 [username]
 
 opsi lain coming soon!
 `
