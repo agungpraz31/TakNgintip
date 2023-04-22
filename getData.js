@@ -22,7 +22,9 @@ const getData = async (ctx, host) => {
         }
         };
 
-        axios.request(options).then(function (response) {
+        axios.request(options).then(async function (response) {
+            console.log(response.data.users[0].user)
+            console.log(response.data.status)
             if(response.data.status == "ok") {
                 const user = response.data.users[0].user
                 const username = user.username
@@ -30,9 +32,13 @@ const getData = async (ctx, host) => {
                 isPrivate = user.is_private
                 isVerified = user.is_verified
                 profilePict = user.profile_pic_url
-                ctx.reply(`Username: ${username}\nFull Name: ${fullName}\nIs Private: ${isPrivate}\nIs Verified: ${isVerified}\nProfile Pict: ${profilePict}`)
+                let replies =  `Username: ${username}\nFull Name: ${fullName}\nIs Private: ${isPrivate}\nIs Verified: ${isVerified}`
+                // ctx.reply(replies)
+                await ctx.replyWithPhoto(profilePict, {
+                    caption: replies,
+                });    
             }
-            ctx.reply('Tidak dapat menemukan pengguna!')
+            // ctx.reply('Tidak dapat menemukan pengguna!')
         }).catch(function (error) {
             console.error(error);
         });
@@ -59,7 +65,8 @@ const getData = async (ctx, host) => {
             const category = user.category_name
             const isPrivate = user.is_private
             const profilePict = user.profile_pic_url_hd
-            ctx.reply(`Username: ${username}\nFull Name: ${fullName}\nBio: ${bio}\nFollowers: ${follower}\nFollowing: ${following}\nCategory: ${category}\nIs Private: ${isPrivate}\nProfile Pict: ${profilePict}`)
+            let replies = `Username: ${username}\nFull Name: ${fullName}\nBio: ${bio}\nFollowers: ${follower}\nFollowing: ${following}\nCategory: ${category}\nIs Private: ${isPrivate}`
+            await ctx.replyWithPhoto(profilePict, { caption: replies })
         })
     }
     else if(selection == "/ngintip3") {
@@ -72,12 +79,12 @@ const getData = async (ctx, host) => {
             }
         };
         
-        axios.request(options).then(function (response) {
+        axios.request(options).then(async function (response) {
             const user = response.data.data.user
             console.log(user);
             const bio = user.biography
-            const follower = user.edge_followed_by
-            const following = user.edge_follow
+            const follower = user.edge_followed_by.count
+            const following = user.edge_follow.count
             const fullName = user.full_name
             const username = user.username
             const id = user.id
@@ -85,7 +92,12 @@ const getData = async (ctx, host) => {
             const isPrivate = user.is_private
             const isVerified = user.is_verified
             const profilePict = user.profile_pic_url_hd
+            let replies = 
+                `ID: <code>${id}</code>\nUsername: <b>${username}</b>\nFull name: ${fullName}\nBio: ${bio}\nFollowers: <code>${follower}</code>\nFollowing: <code>${following}</code>\nCategory: ${category}\nIs Private: ${isPrivate}\nIs Verified: ${isVerified}\nProfile Pict: ${profilePict}`
 
+            await ctx.sendPhoto(ctx.chat.id, new InputFile(profilePict), {
+                caption: replies,
+            });
         }).catch(function (error) {
             console.error(error);
         });
@@ -112,8 +124,8 @@ const getData = async (ctx, host) => {
                 const profile_pict = res.user.hd_profile_pic_url_info.url
                 const biography = res.user.biography
                 console.log({ username, fullName, followerCount, followingCount, mediaCount, profile_pict, biography })
-                await ctx.replyWithPhoto(Input.fromURL(profile_pict));
-                ctx.reply(`Username: ${username}\nFull name: ${fullName}\nFollower: ${followerCount}\nFollowing: ${followingCount}\nMedia Count: ${mediaCount}\nBiografi: ${biography}`)
+                let replies = `Username: ${username}\nFull name: ${fullName}\nFollower: ${followerCount}\nFollowing: ${followingCount}\nMedia Count: ${mediaCount}\nBiografi: ${biography}`
+                await ctx.replyWithPhoto(profile_pict, { caption: replies })
             }).catch(function (error) {
                 console.error(error);
             });
