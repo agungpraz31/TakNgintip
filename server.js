@@ -14,17 +14,17 @@ bot.use((ctx, next) => {
 bot.command('menu', (ctx) => {
     menu(ctx)
 })
-bot.command('ngintip1', async (ctx) => {
-    await getData(ctx, 'instagram-data12.p.rapidapi.com')
+bot.command('ngintip1', (ctx) => {
+    getData(ctx, 'instagram-data12.p.rapidapi.com')
 })
-bot.command('ngintip2', async (ctx) => {
-    await getData(ctx,'instagram-profile1.p.rapidapi.com')
+bot.command('ngintip2', (ctx) => {
+    getData(ctx,'instagram-profile1.p.rapidapi.com')
 })
-bot.command('ngintip3', async (ctx) => {
-    await getData(ctx,'instagram-fast.p.rapidapi.com')
+bot.command('ngintip3', (ctx) => {
+    getData(ctx,'instagram-fast.p.rapidapi.com')
 })
-bot.command('ngintip4', async (ctx) => {
-    await getData(ctx, 'instagram-scraper2.p.rapidapi.com')
+bot.command('ngintip4', (ctx) => {
+    getData(ctx, 'instagram-scraper2.p.rapidapi.com')
 })
 
 if(process.env.NODE_ENV === "production") {
