@@ -40,7 +40,7 @@ if(process.env.NODE_ENV === "production") {
     bot.start();
 }
 
-bot.launch(console.log('Bot Started..'));
+// bot.launch(console.log('Bot Started..'));
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
