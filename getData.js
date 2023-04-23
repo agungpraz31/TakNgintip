@@ -1,3 +1,6 @@
+const { supportBtn } = require('./bottomMenu')
+const { accountType, verifiedAccount } = require('./config')
+
 const getData = async (ctx, host) => {
     const axios = require('axios')
     ctx.reply('Loading...\nTunggu 5 detik, bila lebih ganti command lainnya.')
@@ -65,8 +68,19 @@ const getData = async (ctx, host) => {
             const category = user.category_name
             const isPrivate = user.is_private
             const profilePict = user.profile_pic_url_hd
-            let replies = `Username: ${username}\nFull Name: ${fullName}\nBio: ${bio}\nFollowers: ${follower}\nFollowing: ${following}\nCategory: ${category}\nIs Private: ${isPrivate}`
-            await ctx.replyWithPhoto(profilePict, { caption: replies })
+            let replies = `Username: ${username}\nFull Name: ${fullName}\nFollowers: ${follower}\nFollowing: ${following}\nCategory: ${category}\nIs Private: ${isPrivate}\nBio:\n ${bio}\n`
+
+            // const inlineKeyboard = new InlineKeyboard()
+            //     .text("Get random music", "random").row()
+            //     .switchInline("Saweria");
+
+            await ctx.replyWithPhoto(profilePict, { 
+                caption: replies
+            })
+            supportBtn(ctx)
+            // await ctx.reply("Dukung TakNgintip BOT melalui :", {
+            //     reply_markup: inlineKeyboard
+            // })
         })
     }
     else if(selection == "/ngintip3") {
@@ -90,14 +104,18 @@ const getData = async (ctx, host) => {
             const id = user.id
             const category = user.category_name
             const isPrivate = user.is_private
+            if(isPrivate == "false"){ isPrivate =+ "Public" }
             const isVerified = user.is_verified
             const profilePict = user.profile_pic_url_hd
             let replies = 
-                `ID: <code>${id}</code>\nUsername: <b>${username}</b>\nFull name: ${fullName}\nBio: ${bio}\nFollowers: <code>${follower}</code>\nFollowing: <code>${following}</code>\nCategory: ${category}\nIs Private: ${isPrivate}\nIs Verified: ${isVerified}\nProfile Pict: ${profilePict}`
+                `ID: <code>${id}</code>\nUsername: <b>${username}</b>\nFull name: ${fullName}\nBio: ${bio}\nFollowers: <code>${follower}</code>\nFollowing: <code>${following}</code>\nCategory: ${category}\nAccount Type: ${isPrivate}\nIs Verified: ${isVerified}`
 
-            await ctx.sendPhoto(ctx.chat.id, new InputFile(profilePict), {
+            await ctx.replyWithPhoto(profilePict, {
                 caption: replies,
+                parse_mode: "HTML",
             });
+
+            await supportBtn(ctx)
         }).catch(function (error) {
             console.error(error);
         });
@@ -130,34 +148,83 @@ const getData = async (ctx, host) => {
                 console.error(error);
             });
     }
+    else if(selection == "/ngintip5") {
+        const options = {
+        method: 'GET',
+        url: `https://instagram-scraper-20231.p.rapidapi.com/userinfo/${username}`,
+        headers: {
+            'X-RapidAPI-Key': '47cf8cbebdmshb010ee373830a5ep145af2jsnde10344aa49a',
+            'X-RapidAPI-Host': host
+        }
+        };
+
+        axios.request(options).then(async function (response) {
+            if(response.data.status == "success") {
+                const user = response.data.data
+                const bio = user.biography
+                const followers = user.edge_followed_by.count
+                const following = user.edge_follow.count
+                const fullName = user.full_name
+                const id = user.id
+                const category = user.category_name
+                const isPrivate = user.is_private
+                let accountTypeAfter = await accountType(isPrivate)
+                const isVerified = user.is_verified
+                let accountVerifiedAfter = await verifiedAccount(isVerified)
+                const profilePict = user.profile_pic_url_hd
+                const username = user.username
+
+                let replies = `🔰 ID: ${id}\n📱 Username: ${username}\n🔎 Full name: ${fullName}\n📍 Followers: ${followers}\n📍 Following: ${following}\n🔖 Category: ${category}\n🔐 Account Type: ${accountTypeAfter}\n✔️ Is Verified: ${accountVerifiedAfter}\nBio: ${bio}`
+                await ctx.replyWithPhoto(profilePict, {
+                    caption: replies
+                })
+                supportBtn(ctx)
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
+    else if(selection == "/ngintip6") {
+        const options = {
+        method: 'GET',
+        url: `https://instagram243.p.rapidapi.com/userinfo/${username}`,
+        headers: {
+            'X-RapidAPI-Key': '47cf8cbebdmshb010ee373830a5ep145af2jsnde10344aa49a',
+            'X-RapidAPI-Host': host
+        }
+        };
+
+        axios.request(options).then(async function (response) {
+            if(response.data.status == "success") {
+                const user = response.data.data
+                const bio = user.biography
+                const followers = user.edge_followed_by.count
+                const following = user.edge_follow.count
+                const fullName = user.full_name
+                const id = user.id
+                const category = user.category_name
+                const isPrivate = user.is_private
+                let accountTypeAfter = await accountType(isPrivate)
+                const isVerified = user.is_verified
+                let accountVerifiedAfter = await verifiedAccount(isVerified)
+                const profilePict = user.profile_pic_url_hd
+                const username = user.username
+
+                let replies = `🔰 ID: ${id}\n📱 Username: ${username}\n🔎 Full name: ${fullName}\n📍 Followers: ${followers}\n📍 Following: ${following}\n🔖 Category: ${category}\n🔐 Account Type: ${accountTypeAfter}\n✔️ Is Verified: ${accountVerifiedAfter}\nBio: ${bio}`
+                await ctx.replyWithPhoto(profilePict, {
+                    caption: replies
+                })
+                supportBtn(ctx)
+            }
+        }).catch(function (error) {
+            console.error(error)
+        });
+    }
 }
 
-// const story = () => {
-//     const axios = require("axios");
-
-//         const options = {
-//         method: 'GET',
-//         url: 'https://instagram-data12.p.rapidapi.com/search/',
-//         params: {query: "agungpraz31"},
-//         headers: {
-//             'X-RapidAPI-Key': '47cf8cbebdmshb010ee373830a5ep145af2jsnde10344aa49a',
-//             'X-RapidAPI-Host': 'instagram-data12.p.rapidapi.com'
-//         }
-//         };
-
-//         axios.request(options).then(function (response) {
-//             const user = response.data.users[0].user
-//             const username = user.username
-//             const fullName = user.full_name
-//             isPrivate = user.is_private
-//             isVerified = user.is_verified
-//             profilePict = user.profile_pic_url
-//             ctx.reply(`Username: ${username}\nFull Name: ${full_name}\nIs Private: ${isPrivate}\nIs Verified: ${isVerified}\nProfile Pict: ${profilePict}`)
-//         }).catch(function (error) {
-//             console.error(error);
-//         });
-// }
-
-// story()
+const story = () => {
+    
+}
+story()
 
 module.exports = getData
