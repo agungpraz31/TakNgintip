@@ -1,3 +1,5 @@
+const {devMode} =  require('./templateText.json')
+
 const accountType = async (isPrivate) => {
     if(isPrivate === false) {
         return "Public"
@@ -13,4 +15,8 @@ const verifiedAccount = async (isVerified) => {
     }
 }
 
-module.exports = { accountType, verifiedAccount }
+const devModeAlert = async (ctx) => {
+    if(process.env.NODE_ENV == "development") return await ctx.reply(devMode)
+}
+
+module.exports = { accountType, verifiedAccount, devModeAlert }

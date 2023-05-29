@@ -1,0 +1,11 @@
+{
+    "features" : {
+        "isOnline" : {
+            "prayTime": true,
+            "animeCouple": true,
+            "waifuPict": true,
+            "songLyric": true,
+            "earthquake": true
+        }
+    }
+}

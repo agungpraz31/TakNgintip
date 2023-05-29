@@ -1,17 +1,19 @@
 const { InlineKeyboard } = require('grammy')
 const tmp = require('./templateText.json')
 
+const sosmedBtn = new InlineKeyboard()
+    .url(
+        "SAWERIA",
+        "https://saweria.co/agungpraz31"
+    )
+    .url(
+        "TRAKTEER ID",
+        "https://trakteer.id/agungpraz31"
+    )
+
 const supportBtn = async (ctx) => {
-    const inlineKeyboard = new InlineKeyboard()
-        .url(
-            "SAWERIA",
-            "https://saweria.co/agungpraz31"
-        )
-        .url(
-            "TRAKTEER ID",
-            "https://trakteer.id/agungpraz31"
-        )
-    await ctx.reply(`${tmp.arigatou}\n\n${tmp.support}`, { reply_markup: inlineKeyboard })
+    
+    await ctx.reply(`${tmp.arigatou}\n\n${tmp.support}`, { reply_markup: sosmedBtn })
 }
 
 const ownerSocialMedia = async (ctx) => {
@@ -42,4 +44,4 @@ const commandBtn = () => {
     return inlineKeyboard
 }
 
-module.exports = { supportBtn, ownerSocialMedia, commandBtn }
+module.exports = { supportBtn, ownerSocialMedia, commandBtn, sosmedBtn }
