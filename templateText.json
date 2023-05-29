@@ -2,7 +2,11 @@
     "botDescription": "<b>TAK_NGINTIP BOT | IG STALKER BOT</b>\n\nTakNgintip adalah bot yang dapat kamu gunakan untuk stalking akun instagram sesuai username yang kamu tuliskan. Try it!",
     "owner": "@agungpraz31" ,
     "arigatou": "Terimakasih udah pakai TakNgintip BOT",
+<<<<<<< HEAD
     "support": "Support pengembangan melalui :",
     "devMode": "Maaf banget, Yuika lagi tahap pemeliharaan nih. Jadi gabisa bantu kamu deh. 😢",
     "featurIsOffline": "Maaf banget, fitur ini lagi ngga bisa digunain. Coba yg lain ya."
+=======
+    "support": "Support pengembangan melalui:"
+>>>>>>> d1125aaf874b6a32d2b73e727bb72134997dca12
 }
